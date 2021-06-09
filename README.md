@@ -56,7 +56,7 @@ Basically what it does is escaping every double quotes and enclosing each line i
 
 Then you can generate the schema for the Data Source doing `tb datasource generate gameplays_string.csv` and this would be the file generated:
 
-```sql
+```
 DESCRIPTION generated from gameplays_string.csv
 
 SCHEMA >
@@ -67,28 +67,12 @@ I'd change the `column_00` name to someting like `value`
 
 ### Ingesting data to Tinybird
 
-For the rest of this I assumed your data is in NSJSON file.
+For the rest of this I assumed your data is in NDJSON file.
 
-Create the Data Source on Tinybird with `tb push <datasource_file>`:
-```shell
-> tb push datasources/gameplays_string.datasource 
-** Processing datasources/gameplays_string.datasource
-** Building dependencies
-** Running gameplays_string 
-** 'gameplays_string' created
-** Not pushing fixtures
-```
+Create the Data Source on your Tinybird account running `tb push datasources/gameplays_string.datasource`:
 
-Append data to it running `tb datasource append <datasource_name> <file>`. You'll see this then:
+Append data to it running `tb datasource append gameplays_string gameplays_string.csv`. You'll see this then:
 
-```shell
-> tb datasource append gameplays_string gameplays_string.csv
-** 🥚 starting import process
-** 🐥 done
-** Total rows in gameplays_string: 1000000
-** Data appended to data source 'gameplays_string' successfully!
-** Data pushed to gameplays_string
-```
 
 ### Extracting data from the gameplays_string Data Source
 
@@ -114,3 +98,21 @@ To push it to Tinybird, as well as all the needed dependencies and populate the 
 This is how the Data Flow graph in your account would look after this
 ![](images/data-flow-1.png)
 
+### Create materializations to have real-time rankings of top players and teams per date and game
+
+Running these two commands, two new MVs will be created, to aggregate total scores by date, game and team, and by date, game and player:
+
+```shell
+> tb push pipes/gameplays_group_date_game_team_mv.pipe --push-deps --populate
+> tb push pipes/gameplays_group_date_game_player_mv.pipe --push-deps --populate
+```
+
+And finally, to create endpoints to query these two views, you'd run:
+
+```
+> tb push pipes/top_teams_per_day.pipe --force
+> tb push pipes/top_players_per_day.pipe --force
+```
+
+This is how your final Data Flow graph would look like:
+![](images/final-data-flow-graph.png)
