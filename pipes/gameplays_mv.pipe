@@ -1,0 +1,14 @@
+NODE extract_values
+SQL >
+
+    SELECT 
+        JSONExtractString(value, 'nick') nick,
+        JSONExtractString(value, 'team') team,
+        JSONExtractString(value, 'game') game,
+        FROM_UNIXTIME((toInt64(JSONExtractInt(value, 'datetime') / 1000))) datetime,
+        JSONExtract(value, 'score', 'UInt64') score
+    FROM gameplays_string
+TYPE materialized
+DATASOURCE gameplays
+
+

@@ -1,0 +1,8 @@
+
+SCHEMA >
+    `value` String
+
+ENGINE "MergeTree"
+ENGINE_PARTITION_KEY "substring(value, 1, 1)"
+ENGINE_SORTING_KEY "value, cityHash64(value)"
+ENGINE_SAMPLING_KEY "cityHash64(value)"

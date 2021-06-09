@@ -1,0 +1,30 @@
+NODE results
+SQL >
+
+    %
+    SELECT date, game, team, sum(score) score FROM gameplays_group_date_game_team_mv
+    WHERE 1=1
+    {% if not defined(date) %}
+    AND date = toDate(now())
+    {% else %}
+    AND date = {{Date(date, '', description="Get only the ranking for this date")}}
+    {% end %}
+    {% if defined(game) %}
+    AND game = {{Date(game, '', description="Get only the ranking for this game")}}
+    {% end %}
+    GROUP BY date, game, team
+    ORDER BY date desc, score desc
+
+
+
+NODE top_teams_per_day_1
+SQL >
+
+    SELECT date, team, sum(score) score FROM gameplays_group_date_game_team_mv
+    WHERE date = '2021-01-01'
+    GROUP BY date, team
+    ORDER BY date desc, score desc
+
+    -- it's much faster when you filter per date because it's the 1st el of the sorting key
+
+

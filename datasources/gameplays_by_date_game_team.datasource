@@ -1,0 +1,9 @@
+SCHEMA >
+    `date` Date,
+    `game` LowCardinality(String),
+    `team` LowCardinality(String),
+    `score` UInt64
+
+ENGINE "SummingMergeTree"
+ENGINE_SORTING_KEY "date,game,team"
+ENGINE_PARTITION_KEY "toYYYYMM(date)"

@@ -1,0 +1,15 @@
+NODE calculate
+SQL >
+
+    SELECT 
+        toDate(datetime) date,
+        game,
+        team,
+        sum(score) score
+    FROM gameplays
+    GROUP BY date, game, team
+    ORDER BY date, game, team
+TYPE materialized
+DATASOURCE gameplays_by_date_game_team
+
+

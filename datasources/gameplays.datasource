@@ -1,0 +1,12 @@
+DESCRIPTION generated from gameplays_sample.csv
+
+SCHEMA >
+    `nick` LowCardinality(String),
+    `team` LowCardinality(String),
+    `game` LowCardinality(String),
+    `datetime` DateTime,
+    `score` UInt64
+
+ENGINE "MergeTree"
+ENGINE_SORTING_KEY "datetime,nick"
+ENGINE_PARTITION_KEY "toYYYYMM(datetime)"

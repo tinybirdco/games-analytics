@@ -1,0 +1,13 @@
+# virtual env stuff
+.e
+
+# jupyter stuff
+.ipynb_checkpoints
+
+# large data files
+gameplays.csv
+gameplays_string.csv
+gameplays.json
+
+# tinybird auth data
+.tinyb
