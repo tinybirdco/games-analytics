@@ -10,4 +10,4 @@ do
     tb push pipes/$file
 done
 
-tb datasource append
+tb datasource append gameplays_string https://storage.googleapis.com/tinybird-assets/datasets/demos/games-analytics/gameplays.csv
