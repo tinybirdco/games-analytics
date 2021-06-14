@@ -5,7 +5,7 @@ for fullfile in `find data -name "gameplays*.json"`; do # add | head -n 1 to pro
     filename=$(basename -- "$fullfile")
     extension="${filename##*.}"
     filename="${filename%.*}"
-    csv_output=$(echo data/json_to_csv/$filename.csv)
+    csv_output=$(echo data/json/$filename.csv)
     # converts an ndjson file to a csv file with 1 column
     jq -r '[. | tostring] | @csv' $fullfile  > $csv_output
     echo "CSV file saved in $csv_output"
