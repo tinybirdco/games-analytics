@@ -9,5 +9,7 @@ gameplays.csv
 gameplays_string.csv
 gameplays.json
 
+data/
+
 # tinybird auth data
 .tinyb
