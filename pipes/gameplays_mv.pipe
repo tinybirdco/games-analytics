@@ -5,7 +5,7 @@ SQL >
         JSONExtractString(value, 'nick') nick,
         JSONExtractString(value, 'team') team,
         JSONExtractString(value, 'game') game,
-        FROM_UNIXTIME((toInt64(JSONExtractInt(value, 'datetime') / 1000))) datetime,
+        parseDateTimeBestEffort(JSONExtractString(value, 'datetime')) datetime,
         JSONExtract(value, 'score', 'UInt64') score
     FROM gameplays_string
 TYPE materialized
