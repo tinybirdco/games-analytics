@@ -167,15 +167,16 @@ SQL >
     SELECT date, game, team, sum(score) score FROM gameplays_by_date_game_team
     WHERE 1=1
     {% if not defined(date) %}
-    AND date = toDate(now())
+        AND date = (SELECT max(date) FROM gameplays_by_date_game_team)
     {% else %}
-    AND date = {{Date(date, '', description="Get only the ranking for this date")}}
+        AND date = {{Date(date, '', description="Get only the ranking for this date")}}
     {% end %}
     {% if defined(game) %}
-    AND game = {{Date(game, '', description="Get only the ranking for this game")}}
+        AND game = {{String(game, '', description="Get only the ranking for this game")}}
     {% end %}
     GROUP BY date, game, team
     ORDER BY date desc, score desc
+
 ```
 
 This is how your final Data Flow graph would look like:
