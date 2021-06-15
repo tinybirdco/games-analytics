@@ -3,6 +3,14 @@ NODE manually
 SQL >
 
     SELECT toDate(datetime) date, game, nick, sum(score) score FROM gameplays
+    GROUP BY date, game, nick
+    ORDER BY date desc, score desc
+
+
+NODE filtering
+SQL >
+
+    SELECT toDate(datetime) date, game, nick, sum(score) score FROM gameplays
     WHERE date = (select toDate(max(datetime)) from gameplays) and game = 'Call of Duty: Warzone'
     GROUP BY date, game, nick
     ORDER BY date desc, score desc

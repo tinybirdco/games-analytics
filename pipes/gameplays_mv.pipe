@@ -2,9 +2,9 @@ NODE extract_values
 SQL >
 
     SELECT 
-        CAST(JSONExtractString(value, 'nick'), 'LowCardinality(String)') nick,
-        CAST(JSONExtractString(value, 'team'), 'LowCardinality(String)') team,
-        CAST(JSONExtractString(value, 'game'), 'LowCardinality(String)') game,
+        JSONExtract(value, 'nick', 'LowCardinality(String)') AS nick,
+        JSONExtract(value, 'team', 'LowCardinality(String)') AS team,
+        JSONExtract(value, 'game', 'LowCardinality(String)') AS game,
         parseDateTimeBestEffort(JSONExtractString(value, 'datetime')) datetime,
         JSONExtract(value, 'score', 'UInt64') score
     FROM gameplays_string

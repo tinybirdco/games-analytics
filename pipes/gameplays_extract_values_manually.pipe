@@ -1,0 +1,12 @@
+NODE result
+SQL >
+
+    SELECT
+        JSONExtractString(value, 'nick') AS nick,
+        JSONExtractString(value, 'team') AS team,
+        JSONExtractString(value, 'game') AS game,
+        parseDateTimeBestEffort(JSONExtractString(value, 'datetime')) AS datetime,
+        JSONExtractInt(value, 'score') AS score
+    FROM gameplays_string
+
+
