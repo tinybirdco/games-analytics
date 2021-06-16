@@ -1,12 +1,24 @@
-## Installation
+# About
+
+This is a POC to show how a video-game company could use Tinybird to do real-time analytics and have updated leaderboards for teams and players in their platform.
+
+## Installation and running the project
 
 Create a virtual environment and install the necessary packages
 
 ```bash
 python3 -mvenv .e # creates environment in
- .e/bin/activate # activates environment
+.e/bin/activate # activates environment
 pip install -r requirements.txt
 ```
+
+To replicate the project on your Tinybird account, run
+```bash
+tb auth # will ask you for you auth token
+tb push # will create all the Data Sources, Materialized Views and endpoints in your account
+tb datasource append gameplays_string https://storage.googleapis.com/tinybird-assets/datasets/demos/games-analytics/gameplays.csv
+```
+After this, a token named 'games_demo_poc' will be created in your account as well, that will give you access to two dynamic API endpoints: one for a players leaderboard and one for a teams leaderboard. Both will be accessible from a [URL like this](https://api.tinybird.co/endpoints?token=p.eyJ1IjogImU3NWNmMjUxLThlNjctNGRlOC1iM2FlLTdmMzhlZGIwODdmOSIsICJpZCI6ICJhYjY4OWQ0OS0zODFhLTQzNmYtOTZjZS0zNGFmMWI0MGE4OTQifQ.xNAZcDBP-M_fnOcyw7J3QkpOZEzB5IJAWTqyJqrx8pM) also
 
 ## Generating data by yourself
 
@@ -72,8 +84,6 @@ SCHEMA >
 ```
 
 I changed change the `column_00` name to  `value` before pushing
-
-
 
 ### Ingesting data to Tinybird
 
