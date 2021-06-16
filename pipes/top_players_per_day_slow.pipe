@@ -1,13 +1,4 @@
-
 NODE manually
-SQL >
-
-    SELECT toDate(datetime) date, game, nick, sum(score) score FROM gameplays
-    GROUP BY date, game, nick
-    ORDER BY date desc, score desc
-
-
-NODE filtering
 SQL >
 
     SELECT toDate(datetime) date, game, nick, sum(score) score FROM gameplays

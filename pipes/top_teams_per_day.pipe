@@ -1,3 +1,7 @@
+DESCRIPTION >
+    Will return the top 10 teams for a game (or for all games) for a specific date, by default the last date available
+TOKEN games_demo_poc READ
+
 NODE results
 SQL >
 
@@ -14,5 +18,7 @@ SQL >
     {% end %}
     GROUP BY date, game, team
     ORDER BY date desc, score desc
+    LIMIT {{Int32(page_size, 10)}}
+    OFFSET {{Int32(page, 0) * Int32(page_size, 10)}}
 
 

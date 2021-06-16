@@ -1,0 +1,55 @@
+DESCRIPTION >
+    This is how to transform the original query by reading from Materialized Views instead of from the raw Data Source, so that it becomes about 400x faster than originally.
+
+NODE extract_values
+SQL >
+
+    SELECT
+        JSONExtractString(value, 'nick') AS nick,
+        JSONExtractString(value, 'team') AS team,
+        JSONExtractString(value, 'game') AS game,
+        parseDateTimeBestEffort(JSONExtractString(value, 'datetime')) AS datetime,
+        JSONExtractInt(value, 'score') AS score
+    FROM gameplays_string
+
+
+
+NODE slowest
+DESCRIPTION >
+    We're extracting values from the JSON column on query time, and also doing aggregations on query time. This is as slow as it gets. With more data, it would be even slower.
+
+SQL >
+
+    SELECT toDate(datetime) date, game, nick, sum(score) score FROM extract_values
+    WHERE date = (select toDate(max(datetime)) from extract_values) and game = 'Call of Duty: Warzone'
+    GROUP BY date, game, nick
+    ORDER BY date desc, score desc
+
+
+
+
+NODE better
+DESCRIPTION >
+    9x speedup. Reading data from a new Data Source where we extracted the columns from the original JSON column.
+
+SQL >
+
+    SELECT toDate(datetime) date, game, nick, sum(score) score FROM gameplays
+    WHERE date = (select toDate(max(datetime)) from gameplays) and game = 'Call of Duty: Warzone'
+    GROUP BY date, game, nick
+    ORDER BY date desc, score desc
+
+
+
+NODE fastest
+DESCRIPTION >
+    ~400x speedup. Preaggregating sums in a Materialized View and reading data from it
+
+SQL >
+
+    SELECT date, game, nick, sum(score) score FROM gameplays_by_date_game_player
+    WHERE date = (select max(date) from gameplays_by_date_game_player) and game = 'Call of Duty: Warzone'
+    GROUP BY date, game, nick
+    ORDER BY date desc, score desc
+
+
