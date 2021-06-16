@@ -18,7 +18,9 @@ tb auth # will ask you for you auth token
 tb push # will create all the Data Sources, Materialized Views and endpoints in your account
 tb datasource append gameplays_string https://storage.googleapis.com/tinybird-assets/datasets/demos/games-analytics/gameplays.csv
 ```
-After this, a token named 'games_demo_poc' will be created in your account as well, that will give you access to two dynamic API endpoints: one for a players leaderboard and one for a teams leaderboard. Both will be accessible from a [URL like this](https://api.tinybird.co/endpoints?token=p.eyJ1IjogImU3NWNmMjUxLThlNjctNGRlOC1iM2FlLTdmMzhlZGIwODdmOSIsICJpZCI6ICJhYjY4OWQ0OS0zODFhLTQzNmYtOTZjZS0zNGFmMWI0MGE4OTQifQ.xNAZcDBP-M_fnOcyw7J3QkpOZEzB5IJAWTqyJqrx8pM) also
+After this, a token named 'games_demo_poc' will be created in your account as well, that will give you access to two dynamic API endpoints: one for a players leaderboard and one for a teams leaderboard. Both will be accessible from a [URL like this](https://api.tinybird.co/endpoints?token=p.eyJ1IjogImU3NWNmMjUxLThlNjctNGRlOC1iM2FlLTdmMzhlZGIwODdmOSIsICJpZCI6ICJhYjY4OWQ0OS0zODFhLTQzNmYtOTZjZS0zNGFmMWI0MGE4OTQifQ.xNAZcDBP-M_fnOcyw7J3QkpOZEzB5IJAWTqyJqrx8pM).
+
+This project also contains a pipe called `speedup_analysis`, where you can see how we make a query to get one of the rankings 400X faster by using Materialized Views. Check it out to see how to transform the original query to read data from MVs.
 
 ## Generating data by yourself
 
